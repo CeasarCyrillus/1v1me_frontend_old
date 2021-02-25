@@ -1,0 +1,45 @@
+html{
+    font-family: "sans-serif";
+}
+
+.app {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.addressInput {
+    width: 500px;
+    margin-bottom: 20px;
+}
+
+input {
+    font-size: 20px;
+    color: gray;
+    padding: 5px;
+}
+
+input::placeholder {
+    color: lightslategrey;
+    font-style: italic;
+}
+
+.create1v1Button {
+    margin: 10px;
+    padding: 20px;
+    width: 10%;
+
+    font-size: 20px;
+    border: none;
+
+    color: azure;
+    background-color: darkgreen;
+
+    cursor: pointer;
+
+    transition: width .1s ease-in;
+}
+
+.create1v1Button:hover{
+    width: 20%;
+}
+
