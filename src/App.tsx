@@ -8,7 +8,21 @@ const sendBackendRequest = async () => {
     console.log(text);
 }
 
-sendBackendRequest();
+const connectToWs = () => {
+    const ws = new WebSocket("wss://ws.mynano.ninja/");
+    ws.addEventListener("open", (event) => {
+        console.log(event);
+        ws.send(JSON.stringify({
+            "action": "subscribe",
+            "topic": "confirmation",
+            "ack": true,
+        }))
+    });
+
+    ws.addEventListener("message", (message) => {
+        console.log(message);
+    })
+}
 export const App = () => {
     return (
         <div className="App">
