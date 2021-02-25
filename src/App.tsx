@@ -1,9 +1,12 @@
 import React from 'react';
 import './App.css';
+import {Provider, useDispatch, useSelector} from 'react-redux'
+import {RootState, store} from './store';
 
 const sendBackendRequest = async () => {
-    const response = await fetch("http://localhost:3001/", {headers: {
-        }});
+    const response = await fetch("http://localhost:3001/", {
+        headers: {}
+    });
     const text = await response.text();
     console.log(text);
 }
