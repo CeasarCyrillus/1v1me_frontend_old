@@ -30,6 +30,5 @@ export const CreateMatchPage = () =>
 					Create 1v1
 				</button>
 			</Link>
-
 		</div>
 	)

@@ -2,6 +2,7 @@ import React from 'react';
 import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
 import './App.css';
 import {CreateMatchPage} from "./pages/CreateMatchPage";
+import {PaymentPage} from "./pages/PaymentPage";
 
 export const App = () => {
 	return (
@@ -14,6 +15,10 @@ export const App = () => {
 
 					<Route path={"/create"}>
 						<CreateMatchPage/>
+					</Route>
+
+					<Route path={"/payment"}>
+						<PaymentPage />
 					</Route>
 
 					<Route path={"*"}>

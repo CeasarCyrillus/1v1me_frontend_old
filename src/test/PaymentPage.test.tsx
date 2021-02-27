@@ -6,6 +6,8 @@ describe("PaymentPage.tsx", () => {
 	test("has payment address visible", () => {
 		const page = render(<PaymentPage/>);
 
-		expect(page.getByTestId("payment-address")).toBe("nano_34prihdxwz3u4ps8qjnn14p7ujyewkoxkwyxm3u665it8rg5rdqw84qrypzk");
+		expect(page.getByTestId("payment-address-qr")).not.toBeNull();
+		expect(page.getByTestId("payment-address"))
+			.toHaveTextContent("nano_34prihdxwz3u4ps8qjnn14p7ujyewkoxkwyxm3u665it8rg5rdqw84qrypzk");
 	})
 })
