@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const Create1v1Page = () =>
+export const CreateMatchPage = () =>
 	(
 		<div>
 			<h1>1v1 me</h1>

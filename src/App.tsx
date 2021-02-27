@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
 import './App.css';
-import {Create1v1Page} from "./pages/Create1v1Page";
+import {CreateMatchPage} from "./pages/CreateMatchPage";
 
 export const App = () => {
 	return (
@@ -13,7 +13,7 @@ export const App = () => {
 					</Route>
 
 					<Route path={"/create"}>
-						<Create1v1Page/>
+						<CreateMatchPage/>
 					</Route>
 
 					<Route path={"*"}>
