@@ -1,10 +1,10 @@
-export interface ICreateMatchRequest {
+export interface CreateMatchRequest {
 	player1Address: string;
 	player1BetAmount: number;
 	player2BetAmount: number;
 }
 
-export interface ICreateMatchResponse {
+export interface Match {
 	link: string;
 	player1Address: string;
 	player2Address: null;
@@ -19,11 +19,11 @@ export interface ICreateMatchResponse {
 }
 
 export interface ICreateMatchService {
-	createNewMatch(body: ICreateMatchRequest): Promise<ICreateMatchResponse>
+	createNewMatch(body: CreateMatchRequest): Promise<Match>
 }
 
 export class CreateMatchService implements ICreateMatchService {
-	createNewMatch = async (body: ICreateMatchRequest): Promise<ICreateMatchResponse> => {
+	createNewMatch = async (body: CreateMatchRequest): Promise<Match> => {
 		const response = await fetch("http://localhost:3001/match", {
 			body: JSON.stringify(body),
 			method:"POST",
@@ -32,6 +32,6 @@ export class CreateMatchService implements ICreateMatchService {
 			}
 		});
 		const json = await response.json();
-		return json as ICreateMatchResponse;
+		return json as Match;
 	};
 }

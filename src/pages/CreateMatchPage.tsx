@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {ICreateMatchService} from "../services/CreateMatchService";
+import {Match, ICreateMatchService} from "../services/CreateMatchService";
 
 export interface ICreateMatchPageProps {
 	createMatchService?: ICreateMatchService;
@@ -45,4 +45,21 @@ export const CreateMatchPage = (props: ICreateMatchPageProps) => {
 			</Link>
 		</div>
 	);
+}
+
+export interface MatchState {
+	match: Match | null
+}
+
+const initialMatchState = { match: null };
+
+const MATCH_CREATED = "MATCH_CREATED";
+interface MatchCreated {
+	type: typeof MATCH_CREATED;
+	match: Match;
+}
+
+type MatchActions = MatchCreated;
+export const matchReducer = (state: MatchState = initialMatchState, actions: MatchActions) => {
+	return state;
 }
