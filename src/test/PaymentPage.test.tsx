@@ -3,7 +3,7 @@ import React from "react";
 import {PaymentPage} from "../pages/PaymentPage";
 
 describe("PaymentPage.tsx", () => {
-	test("has payment address visible", () => {
+	test("shows payment address from the state", () => {
 		const page = render(<PaymentPage/>);
 
 		expect(page.getByTestId("payment-address-qr")).not.toBeNull();

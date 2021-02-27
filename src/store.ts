@@ -1,7 +1,6 @@
 import {combineReducers, createStore } from "redux";
 
 
-const rootReducer = combineReducers({})
-
-export type RootState = ReturnType<typeof rootReducer>;
+export const rootReducer = combineReducers({})
 export const store = createStore(rootReducer)
+export type RootState = ReturnType<typeof rootReducer>;
