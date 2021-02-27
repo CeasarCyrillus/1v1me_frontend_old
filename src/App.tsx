@@ -9,11 +9,7 @@ export const App = () => {
 		<div className={"app"}>
 			<Router>
 				<Switch>
-					<Route exact={true} path={"/"}>
-						<Link to={"/create"}>Create 1v1</Link>
-					</Route>
-
-					<Route path={"/create"}>
+					<Route path={"/"}>
 						<CreateMatchPage/>
 					</Route>
 

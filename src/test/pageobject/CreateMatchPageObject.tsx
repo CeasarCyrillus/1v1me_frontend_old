@@ -1,18 +1,18 @@
 import {render, RenderResult} from "@testing-library/react";
 import {MemoryRouter} from "react-router-dom";
-import {CreateMatchPage} from "../../pages/CreateMatchPage";
+import {CreateMatchPage, ICreateMatchPageProps} from "../../pages/CreateMatchPage";
 import React from "react";
 
 export class CreateMatchPageObject {
 	private component: RenderResult;
-	constructor() {
+	constructor(options?: Partial<ICreateMatchPageProps>) {
 		this.component = render(
 			<MemoryRouter>
-				<CreateMatchPage/>
+				<CreateMatchPage createMatchService={options?.createMatchService}/>
 			</MemoryRouter>);
 	}
 
 	addressInput = () => this.component.queryByTestId("address-input");
 	betAmountInput = () => this.component.queryByTestId("bet-amount-input");
-	createMatchButton = () => this.component.queryByTestId("create-1v1-button");
+	createMatchButton = () => this.component.getByTestId("create-1v1-button");
 }
