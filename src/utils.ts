@@ -3,7 +3,6 @@ export const sendBackendRequest = async () => {
         headers: {}
     });
     const text = await response.text();
-    console.log(text);
 }
 
 export const connectToWs = () => {

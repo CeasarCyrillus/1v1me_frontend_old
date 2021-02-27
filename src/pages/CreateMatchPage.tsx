@@ -6,11 +6,11 @@ export interface ICreateMatchPageProps {
 	createMatchService?: ICreateMatchService;
 }
 
-export const CreateMatchPage = (props: ICreateMatchPageProps = {createMatchService: undefined}) => {
+export const CreateMatchPage = (props: ICreateMatchPageProps) => {
 	const newMatch = {
-		player1Address: "",
-		player1BetAmount: 0,
-		player2BetAmount: 0
+		player1Address: "nano_dudeman",
+		player1BetAmount: 1,
+		player2BetAmount: 2
 	};
 
 	return (
@@ -37,7 +37,7 @@ export const CreateMatchPage = (props: ICreateMatchPageProps = {createMatchServi
 					className={"create1v1Button"}
 					data-testid={"create-1v1-button"}
 					onClick={() => {
-						props.createMatchService?.createNewMatch(newMatch)
+						props.createMatchService?.createNewMatch(newMatch);
 					}}
 				>
 					Create 1v1

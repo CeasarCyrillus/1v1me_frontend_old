@@ -23,9 +23,15 @@ export interface ICreateMatchService {
 }
 
 export class CreateMatchService implements ICreateMatchService {
-	async createNewMatch(body: ICreateMatchRequest): Promise<ICreateMatchResponse> {
-		const response = await fetch("POST", {body: JSON.stringify(body)});
+	createNewMatch = async (body: ICreateMatchRequest): Promise<ICreateMatchResponse> => {
+		const response = await fetch("http://localhost:3001/match", {
+			body: JSON.stringify(body),
+			method:"POST",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		});
 		const json = await response.json();
 		return json as ICreateMatchResponse;
-	}
+	};
 }
