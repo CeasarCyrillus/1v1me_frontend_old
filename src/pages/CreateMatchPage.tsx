@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import {ICreateMatchService, Match} from "../services/CreateMatchService";
 import {useDispatch} from "react-redux";
+import {NanoAddressInput} from "../components/NanoAddressInput";
 
 export interface CreateMatchPageProps {
 	createMatchService?: ICreateMatchService;
@@ -32,13 +33,9 @@ export const CreateMatchPage = (props: CreateMatchPageProps) => {
 	return (
 		<div>
 			<h1>1v1 me</h1>
-			<input
-				className={"addressInput"}
-				data-testid={"address-input"}
-				type={"text"}
-				placeholder={"nano address"}
-				value={player1Address}
-				onChange={event => setPlayer1Address(event.target.value)}
+			<NanoAddressInput currentAddress={player1Address} onChangeCallback={newValue => {
+				setPlayer1Address(newValue);
+			}}
 			/>
 			<br/>
 
