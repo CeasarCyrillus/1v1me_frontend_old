@@ -1,15 +1,33 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import {ICreateMatchService, Match} from "../services/CreateMatchService";
+import {useDispatch} from "react-redux";
 
 export interface CreateMatchPageProps {
 	createMatchService?: ICreateMatchService;
 }
 
 export const CreateMatchPage = (props: CreateMatchPageProps) => {
+	const dispatch = useDispatch();
 	const [player1Address, setPlayer1Address] = useState("");
 	const [player1BetAmount, setPlayer1BetAmount] = useState(0);
 	const [player2BetAmount, setPlayer2BetAmount] = useState(0);
+
+	const createNewMatch = async () => {
+		const newMatch = {
+			player1Address,
+			player1BetAmount,
+			player2BetAmount,
+		};
+
+		const match = await props.createMatchService?.createNewMatch(newMatch);
+		if (match !== undefined) {
+			dispatch<MatchCreated>({
+				type: MATCH_CREATED,
+				match: match
+			});
+		}
+	};
 
 	return (
 		<div>
@@ -42,14 +60,8 @@ export const CreateMatchPage = (props: CreateMatchPageProps) => {
 				<button
 					className={"create1v1Button"}
 					data-testid={"create-1v1-button"}
-					onClick={() => {
-						const newMatch = {
-							player1Address,
-							player1BetAmount,
-							player2BetAmount,
-						};
-
-						props.createMatchService?.createNewMatch(newMatch);
+					onClick={async () => {
+						await createNewMatch();
 					}}
 				>
 					Create 1v1

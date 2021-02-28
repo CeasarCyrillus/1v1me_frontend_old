@@ -22,4 +22,14 @@ describe("PaymentPage.tsx", () => {
 		expect(page.paymentAddress())
 			.toHaveTextContent("nano_38prihdxwz3u4ps8qjnn14p7ujyewkoxkwyxm3u665it8rg5rdqw84qrypzk");
 	});
+
+	test("shows loading when payment address is not in the state", () => {
+		const initialState: MatchState = {
+			match: null
+		}
+
+		const page = new PaymentPageObject({initialState});
+
+		expect(page.loadingIcon()).toBeVisible();
+	});
 })

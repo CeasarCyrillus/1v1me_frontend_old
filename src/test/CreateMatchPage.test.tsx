@@ -1,7 +1,7 @@
 import React from 'react';
 import {CreateMatchPageObject} from "./pageobject/CreateMatchPageObject";
-import {fireEvent} from "@testing-library/react"
-import {ICreateMatchService} from "../services/CreateMatchService";
+import {fireEvent, waitFor} from "@testing-library/react"
+import {CreateMatchRequest, ICreateMatchService, Match} from "../services/CreateMatchService";
 import userEvent from "@testing-library/user-event";
 
 describe("Create1v1Page.tsx", () => {
@@ -50,6 +50,55 @@ describe("Create1v1Page.tsx", () => {
 			player2BetAmount: betAmount
 		};
 		expect(mockCreateMatchService.createNewMatch).toHaveBeenLastCalledWith(expectedParams)
+	})
+
+	test("match is added to global state", async () => {
+		const mockedCreateNewMatch = jest.fn((param: CreateMatchRequest) => {
+				const match: Match = {
+					link: "",
+					paymentAddress: "",
+					player1Address: param.player1Address,
+					player1PaymentDone: 0,
+					player1PaymentRequired: param.player1BetAmount,
+					player2Address: null,
+					player2PaymentDone: 0,
+					player2PaymentRequired: param.player1BetAmount
+				}
+				return Promise.resolve(match);
+		});
+
+		const mockCreateMatchService: ICreateMatchService = {
+			createNewMatch: mockedCreateNewMatch
+		}
+		const component = new CreateMatchPageObject({createMatchService: mockCreateMatchService});
+		const dispatch = component.mockDispatch();
+		const player1Address = "nano_489PlayerAddress3a4lsd4a3sdl301201201203112l12ke12";
+		const betAmount = 180.1234567;
+
+		userEvent.type(component.addressInput(), player1Address);
+		userEvent.type(component.betAmountInput(), betAmount.toString());
+		fireEvent.click(component.createMatchButton());
+
+		expect(mockCreateMatchService.createNewMatch).toHaveBeenCalledTimes(1);
+
+		const expectedMatch: Match = {
+			link: "",
+			paymentAddress: "",
+			player1Address: player1Address,
+			player1PaymentDone: 0,
+			player1PaymentRequired: betAmount,
+			player2Address: null,
+			player2PaymentDone: 0,
+			player2PaymentRequired: betAmount
+		}
+
+		await waitFor(() => {
+			expect(dispatch).toHaveBeenCalledWith({
+				type: "MATCH_CREATED",
+				match: expectedMatch
+			});
+		});
+
 	})
 })
 
