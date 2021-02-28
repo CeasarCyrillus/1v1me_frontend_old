@@ -1,4 +1,4 @@
-import {render, RenderResult} from "@testing-library/react";
+import {fireEvent, render, RenderResult} from "@testing-library/react";
 import {NanoAddressInput} from "../../components/NanoAddressInput";
 import React, {useState} from "react";
 import userEvent from "@testing-library/user-event";
@@ -13,8 +13,16 @@ export class NanoAddressInputPageObject {
 			/>);
 	}
 
-	writeAddress = (addresss: string) => userEvent.type(this.addressInput(), addresss);
+	writeAddress = (address: string) => {
+		fireEvent.focus(this.addressInput());
+		userEvent.type(this.addressInput(), address);
+	};
 	addressInput = (): HTMLInputElement => this.component.getByTestId("address-input") as HTMLInputElement;
+	queryValidationMessage = () => this.component.queryByTestId("address-validation-message");
+	clearAddressInput = () => {
+		fireEvent.focus(this.addressInput());
+		userEvent.clear(this.addressInput());
+	};
 }
 
 const NanoAddressInputWrapper = (props: { initialValue?: string, callBack: (newValue: string) => void; }) => {
