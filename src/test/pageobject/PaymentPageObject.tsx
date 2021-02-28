@@ -28,4 +28,9 @@ export class PaymentPageObject {
 	paymentAddressQr = () => this.component.getByTestId("payment-address-qr");
 	paymentAddress = () => this.component.getByTestId("payment-address");
 	loadingIcon = () => this.component.getByTestId("loading-icon");
+	joinLink = () => this.component.getByTestId("join-link");
+
+	paymentRequired = () => this.component.getByTestId("payment-required");
+	paymentDone = () => this.component.getByTestId("payment-done");
+	paymentLeft = () => this.component.getByTestId("payment-left");
 }
