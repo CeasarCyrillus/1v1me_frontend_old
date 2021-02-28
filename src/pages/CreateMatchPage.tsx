@@ -75,14 +75,19 @@ export interface MatchState {
 	match: Match | null
 }
 
-const MATCH_CREATED = "MATCH_CREATED";
-
-interface MatchCreated {
+export const MATCH_CREATED = "MATCH_CREATED";
+export interface MatchCreated {
 	type: typeof MATCH_CREATED;
 	match: Match;
 }
 
 type MatchActions = MatchCreated;
-export const matchReducer = (state: MatchState = {match: null}, actions: MatchActions) => {
+export const matchReducer = (state: MatchState = {match: null}, action: MatchActions | null): MatchState => {
+	if(action === null) return state;
+
+	if(action.type === MATCH_CREATED){
+		return {match: action.match}
+	}
+
 	return state;
 }

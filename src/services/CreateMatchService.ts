@@ -7,7 +7,7 @@ export interface CreateMatchRequest {
 export interface Match {
 	link: string;
 	player1Address: string;
-	player2Address: null;
+	player2Address: string | null;
 
 	player1PaymentRequired: number;
 	player2PaymentRequired: number;
