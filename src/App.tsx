@@ -11,14 +11,12 @@ export const App = () => {
 		<div className={"app"}>
 			<Router>
 				<Switch>
-					<Route path={"/"}>
-						<CreateMatchPage createMatchService={createMatchService}/>
-					</Route>
-
-					<Route path={"/payment"}>
+					<Route exact={true} path={"/payment"}>
 						<PaymentPage/>
 					</Route>
-
+					<Route exact={true} path={"/"}>
+						<CreateMatchPage createMatchService={createMatchService}/>
+					</Route>
 					<Route path={"*"}>
 						<h1>404 Not found :(</h1>
 					</Route>

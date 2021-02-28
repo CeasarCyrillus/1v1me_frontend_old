@@ -9,7 +9,7 @@ export const PaymentPage = (props: {}) => {
 	return (
 		<div>
 			<h1>Payment page</h1>
-			<QRCode data-testid={"payment-address-qr"} value={match!.paymentAddress}/>
-			<p data-testid={"payment-address"}>{match!.paymentAddress}</p>
+			<QRCode data-testid={"payment-address-qr"} value={"asdasdasdasdasdasdasd"}/>
+			<p data-testid={"payment-address"}></p>
 		</div>)
 }

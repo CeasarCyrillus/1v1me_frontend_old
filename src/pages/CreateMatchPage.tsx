@@ -1,17 +1,15 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import {Match, ICreateMatchService} from "../services/CreateMatchService";
+import React, {useState} from "react";
+import {Link} from "react-router-dom";
+import {ICreateMatchService, Match} from "../services/CreateMatchService";
 
-export interface ICreateMatchPageProps {
+export interface CreateMatchPageProps {
 	createMatchService?: ICreateMatchService;
 }
 
-export const CreateMatchPage = (props: ICreateMatchPageProps) => {
-	const newMatch = {
-		player1Address: "nano_dudeman",
-		player1BetAmount: 1,
-		player2BetAmount: 2
-	};
+export const CreateMatchPage = (props: CreateMatchPageProps) => {
+	const [player1Address, setPlayer1Address] = useState("");
+	const [player1BetAmount, setPlayer1BetAmount] = useState(0);
+	const [player2BetAmount, setPlayer2BetAmount] = useState(0);
 
 	return (
 		<div>
@@ -21,6 +19,8 @@ export const CreateMatchPage = (props: ICreateMatchPageProps) => {
 				data-testid={"address-input"}
 				type={"text"}
 				placeholder={"nano address"}
+				value={player1Address}
+				onChange={event => setPlayer1Address(event.target.value)}
 			/>
 			<br/>
 
@@ -29,6 +29,12 @@ export const CreateMatchPage = (props: ICreateMatchPageProps) => {
 				data-testid={"bet-amount-input"}
 				type={"number"}
 				placeholder={"bet amount"}
+				value={player1BetAmount}
+				onChange={event => {
+					const betAmount = Number(event.target.value);
+					setPlayer1BetAmount(betAmount);
+					setPlayer2BetAmount(betAmount);
+				}}
 			/>
 			<br/>
 
@@ -37,6 +43,12 @@ export const CreateMatchPage = (props: ICreateMatchPageProps) => {
 					className={"create1v1Button"}
 					data-testid={"create-1v1-button"}
 					onClick={() => {
+						const newMatch = {
+							player1Address,
+							player1BetAmount,
+							player2BetAmount,
+						};
+
 						props.createMatchService?.createNewMatch(newMatch);
 					}}
 				>
@@ -51,15 +63,14 @@ export interface MatchState {
 	match: Match | null
 }
 
-const initialMatchState = { match: null };
-
 const MATCH_CREATED = "MATCH_CREATED";
+
 interface MatchCreated {
 	type: typeof MATCH_CREATED;
 	match: Match;
 }
 
 type MatchActions = MatchCreated;
-export const matchReducer = (state: MatchState = initialMatchState, actions: MatchActions) => {
+export const matchReducer = (state: MatchState = {match: null}, actions: MatchActions) => {
 	return state;
 }
