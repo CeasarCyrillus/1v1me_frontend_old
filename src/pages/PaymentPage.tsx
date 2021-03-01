@@ -5,6 +5,7 @@ import {RootState} from "../store";
 import {Match} from "../services/CreateMatchService";
 import {JoinLink} from "../components/JoinLink";
 import {PaymentStatus} from "../components/PaymentStatus";
+import {tools} from "nanocurrency-web";
 
 export const PaymentPage = () => {
 	const match = useSelector<RootState, Match | null>(state => state.matchState.match);
@@ -15,11 +16,13 @@ export const PaymentPage = () => {
 			</div>)
 	}
 
+	const rawRequired = tools.convert(match.player1PaymentRequired.toString(), "NANO", "RAW");
+	const qrCodeValue = `nano:${match.paymentAddress}?amount=${rawRequired}`;
 	return (
 		<div>
 			<h1>Payment page</h1>
 			<div>
-				<QRCode data-testid={"payment-address-qr"} value={match.paymentAddress}/>
+				<QRCode data-testid={"payment-address-qr"} value={qrCodeValue}/>
 				<p data-testid={"payment-address"}>
 					{match.paymentAddress}
 				</p>
