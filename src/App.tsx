@@ -5,6 +5,7 @@ import {PaymentPage} from "./pages/PaymentPage";
 import {CreateMatchService} from "./services/CreateMatchService";
 import {Provider} from "react-redux";
 import {store} from "./store";
+import "./App.css"
 
 export const App = () => {
 	const createMatchService = new CreateMatchService();
