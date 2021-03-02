@@ -30,9 +30,10 @@ export const CreateMatchPage = (props: CreateMatchPageProps) => {
 		}
 	};
 
+
+
 	return (
 		<div>
-			<h1>1v1 me</h1>
 			<NanoAddressInput currentAddress={player1Address} onChangeCallback={newValue => {
 				setPlayer1Address(newValue);
 			}}
@@ -53,7 +54,7 @@ export const CreateMatchPage = (props: CreateMatchPageProps) => {
 			/>
 			<br/>
 
-			<Link to={"/payment"}>
+			<Link to={"/match"}>
 				<button
 					className={"create1v1Button"}
 					data-testid={"create-1v1-button"}

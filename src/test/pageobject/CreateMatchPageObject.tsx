@@ -1,20 +1,26 @@
 import {render, RenderResult} from "@testing-library/react";
 import {MemoryRouter} from "react-router-dom";
-import {CreateMatchPage, CreateMatchPageProps, MatchState} from "../../pages/CreateMatchPage";
+import {CreateMatchPage, MatchState} from "../../pages/CreateMatchPage";
 import React from "react";
 import {reducers} from "../../store";
 import {combineReducers, createStore, Store} from "redux";
 import {ICreateMatchService} from "../../services/CreateMatchService";
-import { Provider } from "react-redux";
+import {Provider} from "react-redux";
+
+type CreateMatchPageObjectOptions = Partial<{
+	createMatchService: ICreateMatchService,
+	initialState: MatchState,
+	parentComponent: RenderResult
+}>;
 
 export class CreateMatchPageObject {
 	private component: RenderResult;
-	private store: Store;
-	constructor(options?: Partial<{createMatchService: ICreateMatchService, initialState: MatchState}>) {
+	private readonly store: Store;
+	constructor(options?: CreateMatchPageObjectOptions) {
 		const matchReducer = {matchState: reducers.matchState};
 		const preloadedState = {matchState: options?.initialState};
 		this.store = createStore(combineReducers(matchReducer), preloadedState);
-		this.component = render(
+		this.component = options?.parentComponent ?? render(
 			<Provider store={this.store}>
 				<MemoryRouter>
 					<CreateMatchPage createMatchService={options?.createMatchService}/>
