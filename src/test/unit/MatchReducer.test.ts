@@ -1,8 +1,14 @@
 import {Match} from "../../services/CreateMatchService";
-import {MATCH_CREATED, MatchCreated, matchReducer, MatchState} from "../../pages/CreateMatchPage";
+import {
+	CREATE_MATCH_DONE,
+	CREATE_MATCH_IN_PROGRESS,
+	CreateMatchDone,
+	CreateMatchInProgress,
+	matchReducer
+} from "../../pages/CreateMatchPage";
 
 describe("matchReducer", () => {
-	test("MATCH_CREATED adds match to global state", () => {
+	test(`${CREATE_MATCH_DONE} adds match to global state`, () => {
 		const match: Match = {
 			link: "",
 			paymentAddress: "nano_9091m6mj5as2jd3ja4sjd1jas89dj678as7d8nn0asd8ads8as0da9sd8ad7",
@@ -14,15 +20,22 @@ describe("matchReducer", () => {
 			player2PaymentRequired: 167
 		}
 
-		const action: MatchCreated = {
-			type: MATCH_CREATED,
+		const action: CreateMatchDone = {
+			type: CREATE_MATCH_DONE,
 			match: match
 		}
 
-		const expectedInitialState: MatchState = { match: null }
-		const expectedNewState: MatchState = { match: match }
-
-		expect(matchReducer(undefined, null)).toEqual(expectedInitialState);
-		expect(matchReducer(undefined, action)).toEqual(expectedNewState);
+		expect(matchReducer(undefined, null).match).toEqual(null);
+		expect(matchReducer(undefined, action).match).toEqual(match);
 	});
+
+	test(`${CREATE_MATCH_IN_PROGRESS} sets createMatchInProgress to true`, () => {
+		const action: CreateMatchInProgress = {
+			type: CREATE_MATCH_IN_PROGRESS
+		}
+
+
+		expect(matchReducer(undefined, null).createMatchInProgress).toEqual(false);
+		expect(matchReducer(undefined, action).createMatchInProgress).toEqual(true);
+	})
 })

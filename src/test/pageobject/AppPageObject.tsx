@@ -4,10 +4,9 @@ import {store} from "../../store";
 import React from "react";
 import {App} from "../../App";
 import {Provider} from "react-redux";
-import {CreateMatchPageObject} from "./CreateMatchPageObject";
 
 export class AppPageObject {
-	private component: RenderResult
+	public readonly component: RenderResult
 	constructor(options?: {createMatchService?: ICreateMatchService}) {
 		this.component = render(
 			<Provider store={store}>
@@ -16,6 +15,4 @@ export class AppPageObject {
 				</React.StrictMode>
 			</Provider>)
 	}
-
-	getCreateMatchPage = () => new CreateMatchPageObject({parentComponent: this.component})
 }

@@ -79,7 +79,7 @@ describe("Create1v1Page.tsx", () => {
 
 		await waitFor(() => {
 			expect(dispatch).toHaveBeenCalledWith({
-				type: "MATCH_CREATED",
+				type: "CREATE_MATCH_DONE",
 				match: expectedMatch
 			});
 		});

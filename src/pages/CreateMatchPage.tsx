@@ -23,8 +23,8 @@ export const CreateMatchPage = (props: CreateMatchPageProps) => {
 
 		const match = await props.createMatchService?.createNewMatch(newMatch);
 		if (match !== undefined) {
-			dispatch<MatchCreated>({
-				type: MATCH_CREATED,
+			dispatch<CreateMatchDone>({
+				type: CREATE_MATCH_DONE,
 				match: match
 			});
 		}
@@ -70,22 +70,39 @@ export const CreateMatchPage = (props: CreateMatchPageProps) => {
 }
 
 export interface MatchState {
-	match: Match | null
+	match: Match | null;
+	createMatchInProgress: boolean;
 }
 
-export const MATCH_CREATED = "MATCH_CREATED";
-export interface MatchCreated {
-	type: typeof MATCH_CREATED;
+const initialMatchState: MatchState = {
+	match: null,
+	createMatchInProgress: false,
+};
+
+export const CREATE_MATCH_IN_PROGRESS = "CREATE_MATCH_IN_PROGRESS";
+export interface CreateMatchInProgress {
+	type: typeof CREATE_MATCH_IN_PROGRESS;
+}
+
+export const CREATE_MATCH_DONE = "CREATE_MATCH_DONE";
+export interface CreateMatchDone {
+	type: typeof CREATE_MATCH_DONE;
 	match: Match;
 }
 
-type MatchActions = MatchCreated;
-export const matchReducer = (state: MatchState = {match: null}, action: MatchActions | null): MatchState => {
+type MatchActions = CreateMatchInProgress | CreateMatchDone;
+export const matchReducer = (state: MatchState = initialMatchState, action: MatchActions | null): MatchState => {
 	if(action === null) return state;
 
-	if(action.type === MATCH_CREATED){
-		return {match: action.match}
+	if(action.type === CREATE_MATCH_DONE){
+		return {match: action.match, createMatchInProgress: false}
 	}
+
+	if(action.type === CREATE_MATCH_IN_PROGRESS){
+		return {match: null, createMatchInProgress: true}
+	}
+
+
 
 	return state;
 }

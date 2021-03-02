@@ -5,6 +5,7 @@ import {MatchState} from "../pages/CreateMatchPage";
 describe("PaymentPage.tsx", () => {
 	describe("when match is in state then shows", () => {
 		const matchState: MatchState = {
+			createMatchInProgress: false,
 			match: {
 				link: "/match/171-match-id919201",
 				paymentAddress: "nano_38prihdxwz3u4ps8qjnn14p7ujyewkoxkwyxm3u665it8rg5rdqw84qrypzk",
@@ -46,6 +47,7 @@ describe("PaymentPage.tsx", () => {
 
 	test("shows loading when payment address is not in the state", () => {
 		const initialState: MatchState = {
+			createMatchInProgress: false,
 			match: null
 		}
 

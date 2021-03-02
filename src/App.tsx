@@ -6,6 +6,7 @@ import {CreateMatchService, ICreateMatchService} from "./services/CreateMatchSer
 import {Provider} from "react-redux";
 import {store} from "./store";
 import "./App.css"
+import {MatchPage} from "./pages/MatchPage";
 
 export const App = (props: {createMatchService?: ICreateMatchService}) => {
 	const createMatchService = props.createMatchService ?? new CreateMatchService();
@@ -16,6 +17,9 @@ export const App = (props: {createMatchService?: ICreateMatchService}) => {
 					<Switch>
 						<Route exact={true} path={"/payment"}>
 							<PaymentPage/>
+						</Route>
+						<Route exact={true} path={"/match"}>
+							<MatchPage />
 						</Route>
 						<Route exact={true} path={"/"}>
 							<CreateMatchPage createMatchService={createMatchService}/>
