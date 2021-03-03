@@ -32,4 +32,16 @@ describe("create a match flow", () => {
 				expect(matchPage.isShowingLoadingIcon()).toBe(true);
 			})
 	})
+
+	test(
+		"on match page," +
+		"once there is a match, " +
+		"show QR code for paying", async () => {
+			const app = new AppPageObject({createMatchService});
+			const matchPage = new MatchPageObject({component: app.component});
+			await waitFor(() => {
+				expect(matchPage.isShowingLoadingIcon()).toBe(false);
+			})
+		})
+
 });
