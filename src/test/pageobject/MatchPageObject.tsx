@@ -7,4 +7,6 @@ export class MatchPageObject {
 	constructor(options?: { component: RenderResult }) {
 		this.component = options?.component ?? render(<MatchPage />)
 	}
+
+	isShowingLoadingIcon = () => this.component.queryByTestId("loading-icon") !== null;
 }

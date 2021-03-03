@@ -26,10 +26,10 @@ describe("create a match flow", () => {
 		"if there is no match," +
 		"show a loading icon", async () => {
 			const app = new AppPageObject({createMatchService});
+
 			const matchPage = new MatchPageObject({component: app.component});
 			await waitFor(() => {
-				expect(app.component.getByTestId("supsup"))
+				expect(matchPage.isShowingLoadingIcon()).toBe(true);
 			})
-
 	})
 });
