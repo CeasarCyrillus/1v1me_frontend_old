@@ -36,6 +36,7 @@ describe("create a match flow", () => {
 				const matchPage = new MatchPageObject();
 				await waitFor(() => {
 					expect(matchPage.isShowingLoadingIcon()).toBe(true);
+					expect(matchPage.queryPaymentQrCode()).toBeNull();
 				})
 			})
 
@@ -52,6 +53,7 @@ describe("create a match flow", () => {
 				const matchPage = new MatchPageObject({store});
 				await waitFor(() => {
 					expect(matchPage.isShowingLoadingIcon()).toBe(false);
+					expect(matchPage.queryPaymentQrCode()).not.toBeNull();
 				})
 			})
 	});

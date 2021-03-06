@@ -15,4 +15,5 @@ export class MatchPageObject {
 	}
 
 	isShowingLoadingIcon = () => this.component.queryByTestId("loading-icon") !== null;
+	queryPaymentQrCode = () => this.component.queryByTestId("payment-address-qr");
 }
