@@ -10,10 +10,11 @@ export const MatchPage = (props: {matchService: IMatchService}) => {
 	const {matchService} = props;
 	const dispatch = useDispatch();
 	const match = useSelector<RootState, Match | null>(state => state.matchState.match);
-
+	const createMatchInProgress = useSelector<RootState, boolean>(state => state.matchState.createMatchInProgress);
+	console.log(createMatchInProgress);
 	useEffect(() => {
 		if(matchIdInUrl === "" && match !== null){
-			window.location.hash = "#" + match.id;
+			window.location.hash = `#${match.id}`;
 		}
 	}, [match, matchIdInUrl]);
 
@@ -32,7 +33,9 @@ export const MatchPage = (props: {matchService: IMatchService}) => {
 
 	if(match === null)
 	{
-		getMatchFromServer()
+		if(!createMatchInProgress)
+			getMatchFromServer()
+
 		return (
 			<div data-testid={"loading-icon"}>
 				<p>Loading...</p>

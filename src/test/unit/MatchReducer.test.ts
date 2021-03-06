@@ -10,6 +10,7 @@ import {
 describe("matchReducer", () => {
 	test(`${CREATE_MATCH_DONE} adds match to global state`, () => {
 		const match: Match = {
+			id:"123",
 			link: "",
 			paymentAddress: "nano_9091m6mj5as2jd3ja4sjd1jas89dj678as7d8nn0asd8ads8as0da9sd8ad7",
 			player1Address: "nano_10281ma3mK5as2jd3ja4sjd1jas19j678as7d8nn0asd8ads8as0da9sd8ad9",

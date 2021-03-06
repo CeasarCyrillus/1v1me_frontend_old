@@ -15,6 +15,10 @@ export const CreateMatchPage = (props: CreateMatchPageProps) => {
 	const [player2BetAmount, setPlayer2BetAmount] = useState(0);
 
 	const createNewMatch = async () => {
+		dispatch<CreateMatchInProgress>({
+			type: CREATE_MATCH_IN_PROGRESS,
+		})
+
 		const newMatch = {
 			player1Address,
 			player1BetAmount,
