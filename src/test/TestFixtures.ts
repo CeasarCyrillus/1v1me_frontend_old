@@ -4,8 +4,8 @@ export const getMatch = (
 	player1Address: string = "nano_3x3r177uxmk33hi9wk186dmhhikicbs79h78g8bmci8ghqxc7bqbg6x6a1oa",
 	player1BetAmount: number = 1000): Match => (
 		{
-			id: "9182",
-			link: "",
+			player1MatchId: "player1matchid",
+			player2MatchId: "",
 			paymentAddress: "",
 			player1Address: player1Address,
 			player1PaymentDone: 0,

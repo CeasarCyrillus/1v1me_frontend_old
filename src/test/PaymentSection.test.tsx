@@ -6,7 +6,8 @@ import {PaymentSectionPageObject} from "./pageobject/PaymentSectionPageObject";
 describe("PaymentSection.tsx", () => {
 	describe("shows", () => {
 		const match: Match = {
-			link: "/match/171-match-id919201",
+			player1MatchId: "171-match-id919201",
+			player2MatchId: "172-match-id919201",
 			paymentAddress: "nano_38prihdxwz3u4ps8qjnn14p7ujyewkoxkwyxm3u665it8rg5rdqw84qrypzk",
 			player1Address: "",
 			player1PaymentDone: 20.55,

@@ -14,7 +14,7 @@ export const MatchPage = (props: {matchService: IMatchService}) => {
 
 	useEffect(() => {
 		if(matchIdInUrl === "" && match !== null){
-			window.location.hash = `#${match.id}`;
+			window.location.hash = `#${match.player1MatchId}`;
 		}
 	}, [match, matchIdInUrl]);
 

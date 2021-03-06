@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch, useParams} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {CreateMatchPage} from "./pages/CreateMatchPage";
 import {IMatchService, MatchService} from "./services/MatchService";
 import {Provider} from "react-redux";

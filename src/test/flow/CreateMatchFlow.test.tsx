@@ -59,7 +59,7 @@ describe("create a match flow", () => {
 
 				const matchPage = new MatchPageObject({store, matchService});
 				await waitFor(() => {
-					expect(window.location.hash).toBe(`#${match.id}`)
+					expect(window.location.hash).toBe(`#${match.player1MatchId}`)
 					expect(matchPage.isShowingLoadingIcon()).toBe(false);
 					expect(matchPage.queryPaymentQrCode()).not.toBeNull();
 					expect(matchService.getMatch).not.toHaveBeenCalled()

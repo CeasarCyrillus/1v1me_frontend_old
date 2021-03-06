@@ -5,8 +5,6 @@ export interface CreateMatchRequest {
 }
 
 export interface Match {
-	id: string;
-	link: string;
 	player1Address: string;
 	player2Address: string | null;
 
@@ -17,6 +15,9 @@ export interface Match {
 	player2PaymentDone: number;
 
 	paymentAddress: string;
+
+	player1MatchId: string;
+	player2MatchId: string;
 }
 
 export interface IMatchService {
