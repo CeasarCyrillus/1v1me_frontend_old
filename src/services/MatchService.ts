@@ -18,12 +18,13 @@ export interface Match {
 	paymentAddress: string;
 }
 
-export interface ICreateMatchService {
-	createNewMatch(body: CreateMatchRequest): Promise<Match>
+export interface IMatchService {
+	createMatch(body: CreateMatchRequest): Promise<Match>
+	getMatch(matchId: string): Promise<Match | null>
 }
 
-export class CreateMatchService implements ICreateMatchService {
-	createNewMatch = async (body: CreateMatchRequest): Promise<Match> => {
+export class MatchService implements IMatchService {
+	createMatch = async (body: CreateMatchRequest): Promise<Match> => {
 		const response = await fetch("http://localhost:3001/match", {
 			body: JSON.stringify(body),
 			method:"POST",
@@ -34,4 +35,8 @@ export class CreateMatchService implements ICreateMatchService {
 		const json = await response.json();
 		return json as Match;
 	};
+
+	getMatch(matchId: string): Promise<Match | null> {
+		throw new Error("Not implemented")
+	}
 }

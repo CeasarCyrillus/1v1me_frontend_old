@@ -1,9 +1,9 @@
 import React from 'react';
 import {CreateMatchPageObject} from "./pageobject/CreateMatchPageObject";
 import {fireEvent, waitFor} from "@testing-library/react"
-import {CreateMatchRequest, ICreateMatchService, Match} from "../services/CreateMatchService";
+import {Match} from "../services/MatchService";
 import userEvent from "@testing-library/user-event";
-import {getMockCreateMatchService} from "./TestFixtures";
+import {getMockedMatchService} from "./TestFixtures";
 
 describe("Create1v1Page.tsx", () => {
 	test("Has input for nano address", () => {
@@ -22,20 +22,16 @@ describe("Create1v1Page.tsx", () => {
 	});
 
 	test("Clicking on create match sends request", () => {
-		const mockCreateMatchService: ICreateMatchService = {
-			createNewMatch: jest.fn()
-		}
+		const mockCreateMatchService = getMockedMatchService();
 		const component = new CreateMatchPageObject({createMatchService: mockCreateMatchService});
 
 		fireEvent.click(component.createMatchButton());
 
-		expect(mockCreateMatchService.createNewMatch).toHaveBeenCalledTimes(1);
+		expect(mockCreateMatchService.createMatch).toHaveBeenCalledTimes(1);
 	})
 
 	test("Creates match with the options selected", () => {
-		const mockCreateMatchService: ICreateMatchService = {
-			createNewMatch: jest.fn()
-		}
+		const mockCreateMatchService = getMockedMatchService();
 		const component = new CreateMatchPageObject({createMatchService: mockCreateMatchService});
 		const player1Address = "nano_999PlayerAddress3a4lsd4a3sdl301201201203112l12ke12";
 		const betAmount = 166.5;
@@ -44,17 +40,17 @@ describe("Create1v1Page.tsx", () => {
 		userEvent.type(component.betAmountInput(), betAmount.toString());
 		fireEvent.click(component.createMatchButton());
 
-		expect(mockCreateMatchService.createNewMatch).toHaveBeenCalledTimes(1);
+		expect(mockCreateMatchService.createMatch).toHaveBeenCalledTimes(1);
 		const expectedParams = {
 			player1Address,
 			player1BetAmount: betAmount,
 			player2BetAmount: betAmount
 		};
-		expect(mockCreateMatchService.createNewMatch).toHaveBeenLastCalledWith(expectedParams)
+		expect(mockCreateMatchService.createMatch).toHaveBeenLastCalledWith(expectedParams)
 	})
 
 	test("match is added to global state", async () => {
-		const mockCreateMatchService = getMockCreateMatchService();
+		const mockCreateMatchService = getMockedMatchService();
 		const component = new CreateMatchPageObject({createMatchService: mockCreateMatchService});
 		const dispatch = component.mockDispatch();
 		const player1Address = "nano_489PlayerAddress3a4lsd4a3sdl301201201203112l12ke12";
@@ -64,7 +60,7 @@ describe("Create1v1Page.tsx", () => {
 		userEvent.type(component.betAmountInput(), betAmount.toString());
 		fireEvent.click(component.createMatchButton());
 
-		expect(mockCreateMatchService.createNewMatch).toHaveBeenCalledTimes(1);
+		expect(mockCreateMatchService.createMatch).toHaveBeenCalledTimes(1);
 
 		const expectedMatch: Match = {
 			link: "",

@@ -7,6 +7,6 @@ export const reducers = {
 };
 
 export const rootReducer = combineReducers(reducers)
-export const store = createStore(rootReducer)
+export const createAppStore = () => createStore(rootReducer);
 export type RootState = ReturnType<typeof rootReducer>;
 export const createStoreWithState = (initialState: RootState): Store => createStore(rootReducer, initialState)

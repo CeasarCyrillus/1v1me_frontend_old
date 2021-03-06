@@ -1,6 +1,6 @@
 import React from "react";
 import QRCode from "react-qr-code";
-import {Match} from "../services/CreateMatchService";
+import {Match} from "../services/MatchService";
 import {JoinLink} from "../components/JoinLink";
 import {PaymentStatus} from "../components/PaymentStatus";
 import {tools} from "nanocurrency-web";

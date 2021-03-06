@@ -1,4 +1,4 @@
-import {Match} from "../../services/CreateMatchService";
+import {Match} from "../../services/MatchService";
 import {
 	CREATE_MATCH_DONE,
 	CREATE_MATCH_IN_PROGRESS,

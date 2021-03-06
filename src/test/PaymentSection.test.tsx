@@ -1,5 +1,5 @@
 import React from "react";
-import {Match} from "../services/CreateMatchService";
+import {Match} from "../services/MatchService";
 import {PaymentSectionPageObject} from "./pageobject/PaymentSectionPageObject";
 // TODO: add tests for checking when the match is in the state,
 // Then show the payment section on the match page

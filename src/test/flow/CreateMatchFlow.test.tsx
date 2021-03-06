@@ -1,13 +1,19 @@
 import {fireEvent, waitFor} from "@testing-library/react";
 import {AppPageObject} from "../pageobject/AppPageObject";
-import {getMatch, getMockCreateMatchService} from "../TestFixtures";
+import {getMatch, getMockedMatchService} from "../TestFixtures";
 import {CreateMatchPageObject} from "../pageobject/CreateMatchPageObject";
 import {MatchPageObject} from "../pageobject/MatchPageObject";
 import {goToPath, resetUrl} from "../testutils";
-import {createStoreWithState, RootState, store} from "../../store";
+import {createStoreWithState, RootState} from "../../store";
+import {IMatchService} from "../../services/MatchService";
 
 describe("create a match flow", () => {
-	const createMatchService = getMockCreateMatchService();
+	let matchService: IMatchService;
+
+	beforeEach(() => {
+		matchService = getMockedMatchService();
+	});
+
 	afterEach(() => {
 		resetUrl();
 	})
@@ -16,7 +22,7 @@ describe("create a match flow", () => {
 		"on create match page, " +
 		"when clicking 'Create Match', " +
 		"page redirect to match page", async () => {
-			const app = new AppPageObject({createMatchService});
+			const app = new AppPageObject({createMatchService: matchService});
 			const createMatchPage = new CreateMatchPageObject({component: app.component})
 
 			fireEvent.click(createMatchPage.createMatchButton());
@@ -24,9 +30,9 @@ describe("create a match flow", () => {
 			await waitFor(() => {
 				expect(window.location.pathname).toEqual("/match")
 			})
-	})
+		})
 
-	describe("on match page ", () => {
+	describe("on match page", () => {
 		beforeEach(() => {
 			goToPath("/match")
 		})
@@ -50,11 +56,31 @@ describe("create a match flow", () => {
 				}
 				const store = createStoreWithState(initialState);
 
-				const matchPage = new MatchPageObject({store});
+				const matchPage = new MatchPageObject({store, matchService});
 				await waitFor(() => {
 					expect(matchPage.isShowingLoadingIcon()).toBe(false);
 					expect(matchPage.queryPaymentQrCode()).not.toBeNull();
+					expect(matchService.getMatch).not.toHaveBeenCalled()
 				})
 			})
+
+		test(
+			"if there is no match, and a request to create match is NOT in progress, get match from BE", async () => {
+				const initialState: RootState = {
+					matchState: {
+						createMatchInProgress: true,
+						match: null
+					}
+				}
+
+				const store = createStoreWithState(initialState);
+
+				const matchPage = new MatchPageObject({store, matchService});
+				await waitFor(() => {
+					expect(matchPage.isShowingLoadingIcon()).toBe(true);
+					expect(matchService.getMatch).toHaveBeenCalled();
+				})
+			})
+
 	});
 });

@@ -1,4 +1,4 @@
-import {CreateMatchRequest, ICreateMatchService, Match} from "../services/CreateMatchService";
+import {CreateMatchRequest, IMatchService, Match} from "../services/MatchService";
 
 export const getMatch = (
 	player1Address: string = "nano_3x3r177uxmk33hi9wk186dmhhikicbs79h78g8bmci8ghqxc7bqbg6x6a1oa",
@@ -14,13 +14,16 @@ export const getMatch = (
 			player2PaymentRequired: player1BetAmount
 		});
 
-export const getMockCreateMatchService = (matchToReturn?: Match): ICreateMatchService => {
-	const mockedCreateNewMatch = jest.fn((param: CreateMatchRequest) => {
-		const match: Match = matchToReturn ?? getMatch(param.player1Address, param.player1BetAmount);
+export const getMockedMatchService = (matchToReturn?: Match): IMatchService => {
+	const mockedCreateMatch = jest.fn((param: CreateMatchRequest) => {
+		const match = matchToReturn ?? getMatch(param.player1Address, param.player1BetAmount);
 		return Promise.resolve(match);
 	});
 
+	const mockedGetMatch = jest.fn(() => Promise.resolve(matchToReturn ?? getMatch()));
+
 	return {
-		createNewMatch: mockedCreateNewMatch
+		getMatch: mockedGetMatch,
+		createMatch: mockedCreateMatch
 	};
 }

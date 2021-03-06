@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
-import {ICreateMatchService, Match} from "../services/CreateMatchService";
+import {IMatchService, Match} from "../services/MatchService";
 import {useDispatch} from "react-redux";
 import {NanoAddressInput} from "../components/NanoAddressInput";
 
 export interface CreateMatchPageProps {
-	createMatchService?: ICreateMatchService;
+	matchService?: IMatchService;
 }
 
 export const CreateMatchPage = (props: CreateMatchPageProps) => {
@@ -21,7 +21,7 @@ export const CreateMatchPage = (props: CreateMatchPageProps) => {
 			player2BetAmount,
 		};
 
-		const match = await props.createMatchService?.createNewMatch(newMatch);
+		const match = await props.matchService?.createMatch(newMatch);
 		if (match !== undefined) {
 			dispatch<CreateMatchDone>({
 				type: CREATE_MATCH_DONE,

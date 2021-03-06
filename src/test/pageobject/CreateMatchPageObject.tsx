@@ -4,11 +4,11 @@ import {CreateMatchPage, MatchState} from "../../pages/CreateMatchPage";
 import React from "react";
 import {reducers} from "../../store";
 import {combineReducers, createStore, Store} from "redux";
-import {ICreateMatchService} from "../../services/CreateMatchService";
+import {IMatchService} from "../../services/MatchService";
 import {Provider} from "react-redux";
 
 type CreateMatchPageObjectOptions = Partial<{
-	createMatchService: ICreateMatchService,
+	createMatchService: IMatchService,
 	initialState: MatchState,
 	component: RenderResult
 }>;
@@ -23,7 +23,7 @@ export class CreateMatchPageObject {
 		this.component = options?.component ?? render(
 			<Provider store={this.store}>
 				<MemoryRouter>
-					<CreateMatchPage createMatchService={options?.createMatchService}/>
+					<CreateMatchPage matchService={options?.createMatchService}/>
 				</MemoryRouter>
 			</Provider>);
 	}

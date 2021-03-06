@@ -1,7 +1,7 @@
 import {render, RenderResult} from "@testing-library/react";
 import React from "react";
 import {PaymentSection} from "../../pages/PaymentSection";
-import { Match } from "../../services/CreateMatchService";
+import { Match } from "../../services/MatchService";
 import {getMatch} from "../TestFixtures";
 
 export class PaymentSectionPageObject {
