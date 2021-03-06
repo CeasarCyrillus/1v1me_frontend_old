@@ -11,7 +11,7 @@ export const MatchPage = (props: {matchService: IMatchService}) => {
 	const dispatch = useDispatch();
 	const match = useSelector<RootState, Match | null>(state => state.matchState.match);
 	const createMatchInProgress = useSelector<RootState, boolean>(state => state.matchState.createMatchInProgress);
-	console.log(createMatchInProgress);
+
 	useEffect(() => {
 		if(matchIdInUrl === "" && match !== null){
 			window.location.hash = `#${match.id}`;

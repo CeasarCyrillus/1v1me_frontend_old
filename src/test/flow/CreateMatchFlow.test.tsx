@@ -72,7 +72,7 @@ describe("create a match flow", () => {
 				goToPath(`/match/${matchId}`);
 				const initialState: RootState = {
 					matchState: {
-						createMatchInProgress: true,
+						createMatchInProgress: false,
 						match: null
 					}
 				}
