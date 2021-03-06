@@ -1,9 +1,10 @@
-import {fireEvent, render, RenderResult, waitFor} from "@testing-library/react";
+import {fireEvent, waitFor} from "@testing-library/react";
 import {AppPageObject} from "../pageobject/AppPageObject";
-import {getMockCreateMatchService} from "../TestFixtures";
+import {getMatch, getMockCreateMatchService} from "../TestFixtures";
 import {CreateMatchPageObject} from "../pageobject/CreateMatchPageObject";
 import {MatchPageObject} from "../pageobject/MatchPageObject";
 import {goToPath, resetUrl} from "../testutils";
+import {createStoreWithState, RootState, store} from "../../store";
 
 describe("create a match flow", () => {
 	const createMatchService = getMockCreateMatchService();
@@ -31,25 +32,27 @@ describe("create a match flow", () => {
 		})
 
 		test(
-			"if there is no match, " +
-			"show a loading icon", async () => {
-				const app = new AppPageObject({createMatchService});
-
-				const matchPage = new MatchPageObject({component: app.component});
+			"if there is not a match, show a loading icon", async () => {
+				const matchPage = new MatchPageObject();
 				await waitFor(() => {
 					expect(matchPage.isShowingLoadingIcon()).toBe(true);
 				})
 			})
 
 		test(
-			"once there is a match, " +
-			"show QR code for paying", async () => {
-				const app = new AppPageObject({createMatchService});
-				const matchPage = new MatchPageObject({component: app.component});
+			"once there is a match, hide loading icon and show QR code for paying", async () => {
+				const initialState: RootState = {
+					matchState: {
+						createMatchInProgress: false,
+						match: getMatch()
+					}
+				}
+				const store = createStoreWithState(initialState);
+
+				const matchPage = new MatchPageObject({store});
 				await waitFor(() => {
 					expect(matchPage.isShowingLoadingIcon()).toBe(false);
 				})
 			})
-
 	});
 });
