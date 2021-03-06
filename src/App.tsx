@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, useParams} from 'react-router-dom';
 import {CreateMatchPage} from "./pages/CreateMatchPage";
 import {IMatchService, MatchService} from "./services/MatchService";
 import {Provider} from "react-redux";
@@ -15,7 +15,7 @@ export const App = (props: { matchService?: IMatchService }) => {
 				<Router>
 					<Switch>
 						<Route exact={true} path={"/match"}>
-							<MatchPage matchService={matchService}/>
+							<MatchPage matchService={matchService} />
 						</Route>
 						<Route exact={true} path={"/"}>
 							<CreateMatchPage matchService={matchService}/>

@@ -3,7 +3,7 @@ import {CreateMatchPageObject} from "./pageobject/CreateMatchPageObject";
 import {fireEvent, waitFor} from "@testing-library/react"
 import {Match} from "../services/MatchService";
 import userEvent from "@testing-library/user-event";
-import {getMockedMatchService} from "./TestFixtures";
+import {getMatch, getMockedMatchService} from "./TestFixtures";
 
 describe("Create1v1Page.tsx", () => {
 	test("Has input for nano address", () => {
@@ -62,16 +62,7 @@ describe("Create1v1Page.tsx", () => {
 
 		expect(mockCreateMatchService.createMatch).toHaveBeenCalledTimes(1);
 
-		const expectedMatch: Match = {
-			link: "",
-			paymentAddress: "",
-			player1Address: player1Address,
-			player1PaymentDone: 0,
-			player1PaymentRequired: betAmount,
-			player2Address: null,
-			player2PaymentDone: 0,
-			player2PaymentRequired: betAmount
-		}
+		const expectedMatch = getMatch(player1Address, betAmount);
 
 		await waitFor(() => {
 			expect(dispatch).toHaveBeenCalledWith({

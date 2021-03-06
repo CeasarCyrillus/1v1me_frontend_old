@@ -47,17 +47,19 @@ describe("create a match flow", () => {
 			})
 
 		test(
-			"once there is a match, hide loading icon and show QR code for paying", async () => {
+			"once there is a match, hide loading icon, show QR code for paying and add match id to url", async () => {
+				const match = getMatch();
 				const initialState: RootState = {
 					matchState: {
 						createMatchInProgress: false,
-						match: getMatch()
+						match: match
 					}
 				}
 				const store = createStoreWithState(initialState);
 
 				const matchPage = new MatchPageObject({store, matchService});
 				await waitFor(() => {
+					expect(window.location.hash).toBe(`#${match.id}`)
 					expect(matchPage.isShowingLoadingIcon()).toBe(false);
 					expect(matchPage.queryPaymentQrCode()).not.toBeNull();
 					expect(matchService.getMatch).not.toHaveBeenCalled()
@@ -66,6 +68,8 @@ describe("create a match flow", () => {
 
 		test(
 			"if there is no match, and a request to create match is NOT in progress, get match from BE", async () => {
+				const matchId = "#S87A07HHJA231";
+				goToPath(`/match/${matchId}`);
 				const initialState: RootState = {
 					matchState: {
 						createMatchInProgress: true,
@@ -74,11 +78,18 @@ describe("create a match flow", () => {
 				}
 
 				const store = createStoreWithState(initialState);
+				const dispatchSpy = jest.spyOn(store, "dispatch");
 
 				const matchPage = new MatchPageObject({store, matchService});
 				await waitFor(() => {
 					expect(matchPage.isShowingLoadingIcon()).toBe(true);
-					expect(matchService.getMatch).toHaveBeenCalled();
+				})
+				await waitFor(() => {
+					expect(matchService.getMatch).toHaveBeenCalledTimes(1)
+					expect(matchService.getMatch).toHaveBeenCalledWith(matchId)
+
+					expect(dispatchSpy).toHaveBeenCalledWith({type: "GET_MATCH_IN_PROGRESS"})
+					expect(dispatchSpy).toHaveBeenCalledWith({type: "GET_MATCH_DONE", match: getMatch()})
 				})
 			})
 

@@ -5,6 +5,7 @@ export interface CreateMatchRequest {
 }
 
 export interface Match {
+	id: string;
 	link: string;
 	player1Address: string;
 	player2Address: string | null;

@@ -90,19 +90,34 @@ export interface CreateMatchDone {
 	match: Match;
 }
 
-type MatchActions = CreateMatchInProgress | CreateMatchDone;
+export const GET_MATCH_IN_PROGRESS = "GET_MATCH_IN_PROGRESS";
+export interface GetMatchInProgress {
+	type: typeof GET_MATCH_IN_PROGRESS
+}
+
+export const GET_MATCH_DONE = "GET_MATCH_DONE";
+export interface GetMatchDone {
+	type: typeof GET_MATCH_DONE,
+	match: Match | null
+}
+
+type CreateMatchActions = CreateMatchInProgress | CreateMatchDone;
+type GetMatchActions = GetMatchInProgress | GetMatchDone;
+type MatchActions =  CreateMatchActions | GetMatchActions;
+
 export const matchReducer = (state: MatchState = initialMatchState, action: MatchActions | null): MatchState => {
 	if(action === null) return state;
 
-	if(action.type === CREATE_MATCH_DONE){
-		return {match: action.match, createMatchInProgress: false}
+	switch (action.type) {
+		case CREATE_MATCH_IN_PROGRESS:
+			return {match: null, createMatchInProgress: true}
+		case CREATE_MATCH_DONE:
+			return {match: action.match, createMatchInProgress: false}
+		case GET_MATCH_IN_PROGRESS:
+			return {match: null, createMatchInProgress: false}
+		case GET_MATCH_DONE:
+			return {match: action.match, createMatchInProgress: false}
 	}
-
-	if(action.type === CREATE_MATCH_IN_PROGRESS){
-		return {match: null, createMatchInProgress: true}
-	}
-
-
 
 	return state;
 }
