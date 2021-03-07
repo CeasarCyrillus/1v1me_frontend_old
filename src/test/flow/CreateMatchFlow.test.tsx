@@ -47,7 +47,7 @@ describe("create a match flow", () => {
 			})
 
 		test(
-			"once there is a match, hide loading icon, show QR code for paying and add match id to url", async () => {
+			"once there is a match, hide loading icon, show QR code for paying and save match id", async () => {
 				const match = getMatch();
 				const initialState: RootState = {
 					matchState: {
@@ -55,21 +55,22 @@ describe("create a match flow", () => {
 						match: match
 					}
 				}
+
 				const store = createStoreWithState(initialState);
 
 				const matchPage = new MatchPageObject({store, matchService});
 				await waitFor(() => {
-					expect(window.location.hash).toBe(`#${match.player1MatchId}`)
+					expect(sessionStorage.getItem("matchId")).toBe(match.player1MatchId);
 					expect(matchPage.isShowingLoadingIcon()).toBe(false);
 					expect(matchPage.queryPaymentQrCode()).not.toBeNull();
-					expect(matchService.getMatch).not.toHaveBeenCalled()
+					expect(matchService.getMatch).not.toHaveBeenCalled();
 				})
 			})
 
 		test(
 			"if there is no match, and a request to create match is NOT in progress, get match from BE", async () => {
-				const matchId = "#S87A07HHJA231";
-				goToPath(`/match/${matchId}`);
+				const matchId = "S87A07HHJA231";
+				sessionStorage.setItem("matchId", matchId);
 				const initialState: RootState = {
 					matchState: {
 						createMatchInProgress: false,

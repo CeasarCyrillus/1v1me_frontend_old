@@ -39,6 +39,7 @@ export class MatchService implements IMatchService {
 	};
 
 	getMatch(matchId: string): Promise<Match | null> {
+		console.log(matchId)
 		throw new Error("Not implemented")
 	}
 }

@@ -6,24 +6,24 @@ import {PaymentQrCode} from "./PaymentSection";
 import {GET_MATCH_DONE, GET_MATCH_IN_PROGRESS, GetMatchDone, GetMatchInProgress} from "./CreateMatchPage";
 
 export const MatchPage = (props: {matchService: IMatchService}) => {
-	const matchIdInUrl = getMatchIdFromUrl()
+	const matchIdSaved = getSavedMatchId()
 	const {matchService} = props;
 	const dispatch = useDispatch();
 	const match = useSelector<RootState, Match | null>(state => state.matchState.match);
 	const createMatchInProgress = useSelector<RootState, boolean>(state => state.matchState.createMatchInProgress);
 
 	useEffect(() => {
-		if(matchIdInUrl === "" && match !== null){
-			window.location.hash = `#${match.player1MatchId}`;
+		if(!matchIdSaved && match !== null){
+			sessionStorage.setItem("matchId", match.player1MatchId);
 		}
-	}, [match, matchIdInUrl]);
+	}, [match, matchIdSaved]);
 
 	const getMatchFromServer = async () => {
 		dispatch<GetMatchInProgress>({
 			type: GET_MATCH_IN_PROGRESS
 		});
 
-		const matchFromServer = await matchService.getMatch(matchIdInUrl);
+		const matchFromServer = await matchService.getMatch(matchIdSaved ?? "");
 
 		dispatch<GetMatchDone>({
 			type: GET_MATCH_DONE,
@@ -50,4 +50,4 @@ export const MatchPage = (props: {matchService: IMatchService}) => {
 	)
 }
 
-const getMatchIdFromUrl = () => window.location.hash;
+const getSavedMatchId = () => sessionStorage.getItem("matchId")
