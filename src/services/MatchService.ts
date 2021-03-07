@@ -38,8 +38,14 @@ export class MatchService implements IMatchService {
 		return json as Match;
 	};
 
-	getMatch(matchId: string): Promise<Match | null> {
-		console.log(matchId)
-		throw new Error("Not implemented")
+	async getMatch(matchId: string): Promise<Match | null> {
+		const response = await fetch(`http://localhost:3001/match/${matchId}`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		});
+		const json = await response.json();
+		return json as Match;
 	}
 }
