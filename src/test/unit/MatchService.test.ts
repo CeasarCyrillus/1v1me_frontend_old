@@ -1,36 +1,49 @@
 import fetchMock from "fetch-mock";
-import {CreateMatchRequest, MatchService} from "../../services/MatchService";
-import {getLastCallToFetch} from "../testutils";
+import { CreateMatchRequest, MatchService } from "../../services/MatchService";
+import { getLastCallToFetch } from "../testutils";
 
 describe("MatchService.ts", () => {
-	afterEach(() => {
-		fetchMock.reset();
-	})
+  afterEach(() => {
+    fetchMock.reset();
+  });
 
-	test("createMatch", async () => {
-		fetchMock.postOnce("http://localhost:3001/match", {});
+  const PLAYER_1_ADDRESS =
+    "nano_34prihdxwz3u4ps8qjnn14p7ujyewkoxkwyxm3u665it8rg5rdqw84qrypzk";
+  const PLAYER_1_BET_AMOUNT = 5.1293;
+  const PLAYER_2_BET_AMOUNT = 0.001928;
+  const MATCH_ID = "A9J7K5J6B4G21OD9DJ2MD9A72NRI7A";
+  const MATCH_URL = "http://localhost:3001/match";
 
-		const createMatchRequest: CreateMatchRequest = {
-			player1Address: "nano_34prihdxwz3u4ps8qjnn14p7ujyewkoxkwyxm3u665it8rg5rdqw84qrypzk",
-			player1BetAmount: 5.12930,
-			player2BetAmount: 0.001928
+  test("createMatch", async () => {
+    fetchMock.postOnce(MATCH_URL, {});
 
-		}
-		const matchService = new MatchService()
+    const createMatchRequest: CreateMatchRequest = {
+      player1Address: PLAYER_1_ADDRESS,
+      player1BetAmount: PLAYER_1_BET_AMOUNT,
+      player2BetAmount: PLAYER_2_BET_AMOUNT,
+    };
+    const matchService = new MatchService();
 
-		await matchService.createMatch(createMatchRequest);
+    await matchService.createMatch(createMatchRequest);
 
-		const {url, body} = getLastCallToFetch();
-		expect(url).toBe("http://localhost:3001/match");
-		expect(body).toEqual({
-			player1Address: "nano_34prihdxwz3u4ps8qjnn14p7ujyewkoxkwyxm3u665it8rg5rdqw84qrypzk",
-			player1BetAmount: 5.12930,
-			player2BetAmount: 0.001928
-		});
-	})
+    const { url, body } = getLastCallToFetch();
+    expect(url).toBe(MATCH_URL);
+    expect(body).toEqual({
+      player1Address: PLAYER_1_ADDRESS,
+      player1BetAmount: PLAYER_1_BET_AMOUNT,
+      player2BetAmount: PLAYER_2_BET_AMOUNT,
+    });
+  });
 
-	test("createMatch", () => {
-		expect(true).toBeTruthy();
-	})
+  test("getMatch", () => {
+    const expectedUrl = `${MATCH_URL}/${MATCH_ID}`;
+    fetchMock.getOnce(expectedUrl, {});
+    const matchService = new MatchService();
 
-})
+    matchService.getMatch(MATCH_ID);
+
+    const { url, body } = getLastCallToFetch();
+    expect(url).toBe(expectedUrl);
+    expect(body).toEqual({});
+  });
+});
